@@ -12,7 +12,5 @@ namespace LayerDataAccess.Interfaces
     {
         List<PlayListDB> GetSeguidasByUsuario(int idUsuario);
         List<PlayListDB> GetNoSeguidasByUsuario(int idUsuario);
-        bool AddPlayListToUsuario(int idPlayList, int idUsuario);
-        bool RemovePlayListToUsuario(int idPlayList, int idUsuario);
     }
 }

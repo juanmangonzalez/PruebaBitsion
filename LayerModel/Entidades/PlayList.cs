@@ -12,5 +12,6 @@ namespace LayerModel
         public string Nombre { get; set; }
         public int CantidadCanciones { get; set; }
         public TimeSpan Duracion { get; set; }
+        public int Seguidores{ get; set; }
     }
 }

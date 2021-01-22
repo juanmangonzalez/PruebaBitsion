@@ -60,8 +60,10 @@
     <Compile Include="Entidades\UserDB.cs" />
     <Compile Include="Implementaciones\BaseRepository.cs" />
     <Compile Include="Implementaciones\PlayListDBRepository.cs" />
+    <Compile Include="Implementaciones\PlayListUserDBRepository.cs" />
     <Compile Include="Implementaciones\UserDBRepository.cs" />
     <Compile Include="Interfaces\IPlayListDBRepository.cs" />
+    <Compile Include="Interfaces\IPlayListUserDBRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IUserDBRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

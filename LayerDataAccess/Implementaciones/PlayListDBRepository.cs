@@ -15,41 +15,29 @@ namespace LayerDataAccess.Implementaciones
 
         }
 
-        public bool AddPlayListToUsuario(int idPlayList, int idUsuario)
-        {
-            context.PlayListsUsers.Add(new PlayListUserDB { PlayListId = idPlayList, UserId = idUsuario });
-            context.SaveChanges();
-            return true;
-        }
-
         public List<PlayListDB> GetNoSeguidasByUsuario(int idUsuario)
         {
-            var query = context.PlayLists.Join(context.PlayListsUsers,
-                                                pl => pl.Id,
-                                                plu => plu.PlayListId,
-                                                (pl, plu) => new { PL = pl, PLU = plu })
-                                          .Where(x => x.PLU.UserId != idUsuario)
-                                          .Select(x=>x.PL);
-            return query.ToList<PlayListDB>();            
+            var result = new List<PlayListDB>();
+            var listSeguidas = GetSeguidasByUsuario(idUsuario);
+            foreach (var pl in context.PlayLists)
+            {
+                if (listSeguidas.FirstOrDefault(x => x.Id == pl.Id) == null)
+                    result.Add(pl);
+            }
+            return result;
         }
 
         public List<PlayListDB> GetSeguidasByUsuario(int idUsuario)
         {
 
-            var query = context.PlayLists.Join(context.PlayListsUsers,
+            var query = context.PlayLists.Join(context.PlayListsUsers.Where(x => x.UserId == idUsuario),
                                                 pl => pl.Id,
                                                 plu => plu.PlayListId,
                                                 (pl, plu) => new { PL = pl, PLU = plu })
-                                          .Where(x => x.PLU.UserId == idUsuario)
+                                          .Where(x => x.PLU.PlayListId == x.PL.Id)
                                           .Select(x => x.PL);
             return query.ToList<PlayListDB>();
         }
 
-        public bool RemovePlayListToUsuario(int idPlayList, int idUsuario)
-        {
-            context.PlayListsUsers.Remove(context.PlayListsUsers.First(plu => plu.PlayListId == idPlayList && plu.UserId == idUsuario));
-            context.SaveChanges();
-            return true;
-        }
     }
 }

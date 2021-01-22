@@ -15,11 +15,13 @@ namespace LayerBus.Implementaciones
     {
         private readonly IContext context;
         private readonly IPlayListDBRepository playListRepository;
+        private readonly IPlayListUserDBRepository playListUserRepository;
 
         public PlayListBus(IContext context)
         {
             this.context = context;
             this.playListRepository = new PlayListDBRepository(context);
+            this.playListUserRepository = new PlayListUserDBRepository(context);
         }
 
         public List<PlayList> GetAll()
@@ -50,7 +52,8 @@ namespace LayerBus.Implementaciones
                     Id = pl.Id,
                     Nombre = pl.Nombre,
                     CantidadCanciones = pl.CantidadCanciones,
-                    Duracion = pl.Duracion
+                    Duracion = pl.Duracion,
+                    Seguidores = playListUserRepository.GetByPlayListId(pl.Id).Count()
                 });
             }
 

@@ -1,0 +1,59 @@
+﻿@model BitsionPrueba.ViewModels.PlayListViewModel
+@{
+    ViewBag.Title = "Gestión de Play Lists de " + @Model.NombreUsuario;
+}
+
+<h2>@Model.NombreUsuario</h2>
+
+@if (Model.PlayListsSeguidas != null && Model.PlayListsSeguidas.Count() > 0)
+{
+    <p class="subTitulo">Play List Seguidas</p>
+    <table id="tabla" width="100%" style="text-align:center">
+        <tr class="ElementoCabecera">
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Canciones</th>
+            <th>Duracion</th>
+        </tr>
+        @foreach (var pl in Model.PlayListsSeguidas)
+        {
+            <tr>
+                <td>@pl.Id</td>
+                <td>@pl.Nombre</td>
+                <td>@pl.CantidadCanciones.ToString()</td>
+                <td>@pl.Duracion.ToString()</td>
+                <td></td>
+            </tr>
+        }
+    </table>
+    <hr />
+}
+
+@if (Model.PlayListsNoSeguidas != null && Model.PlayListsNoSeguidas.Count() > 0)
+{
+    <p class="subTitulo">Play List NO Seguidas</p>
+    <table id="tabla" width="100%" style="text-align:center">
+        <tr class="ElementoCabecera">
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Canciones</th>
+            <th>Duracion</th>
+        </tr>
+        @foreach (var pl in Model.PlayListsNoSeguidas)
+        {
+            <tr>
+                <td>@pl.Id</td>
+                <td>@pl.Nombre</td>
+                <td>@pl.CantidadCanciones.ToString()</td>
+                <td>@pl.Duracion.ToString()</td>
+                <td></td>
+            </tr>
+        }
+    </table>
+    <hr />
+}
+
+<label>@Model.MensajeError</label>
+<br />
+<br />
+<a href="/PlayList/Index">Volver</a>

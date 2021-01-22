@@ -1,32 +1,47 @@
 ﻿@model BitsionPrueba.ViewModels.PlayListViewModel
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Todas las Play Lists";
 }
 
 <h2>Index</h2>
 
-@if (Model.AllPlayLists != null && Model.AllPlayLists.Count() > 0)
+@using (Html.BeginForm("Editar", "PlayList", FormMethod.Post))
 {
-    <p class="subTitulo">Play List Existentes</p>
-    <table id="tabla" width="100%" style="text-align:center">
-        <tr class="ElementoCabecera">
-            <th>Id</th>
-            <th>Nombre</th>
-            <th>Canciones</th>
-            <th>Duracion</th>
-        </tr>
-        @foreach (var pl in Model.AllPlayLists)
-        {
-            <tr>
-                <td>@pl.Id</td>
-                <td>@pl.Nombre</td>
-                <td>@pl.CantidadCanciones.ToString()</td>
-                <td>@pl.Duracion.ToString()</td>
+    if (Model.AllPlayLists != null && Model.AllPlayLists.Count() > 0)
+    {
+        <p class="subTitulo">Play List Existentes</p>
+        <table id="tabla" width="100%" style="text-align:center">
+            <tr class="ElementoCabecera">
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Canciones</th>
+                <th>Duracion</th>
+                <th>Seguidores</th>
+                <th></th>
             </tr>
-        }
-    </table>
-    <hr />
-    <p>Usuarios</p>
-    <label class="lblGralRight">Usuarios</label>@Html.DropDownListFor(x => x.IdUsuarioSeleccionado, new SelectList(Model.Users, "Id", "Nombre"), new { @class = "txtGral" })
-    <a href="Editar/@Model.IdUsuarioSeleccionado">Editar</a>
+            @foreach (var pl in Model.AllPlayLists)
+            {
+                <tr>
+                    <td>@pl.Id</td>
+                    <td>@pl.Nombre</td>
+                    <td>@pl.CantidadCanciones.ToString()</td>
+                    <td>@pl.Duracion.ToString()</td>
+                    <td>@pl.Seguidores</td>
+                </tr>
+            }
+        </table>
+        <hr />
+        <p>Usuarios</p>
+
+        @Html.DropDownListFor(x => x.IdUsuarioSeleccionado, new SelectList(Model.Users, "Id", "Nombre"), new { id = "ddlUser" })
+        <div style="display: none">
+            <!-- Tiene que quedar invisible. Se usa para almacenar id de productos chequeados -->
+            @Html.TextBoxFor(model => model.IdUsuarioSeleccionado)
+        </div>
+        <button type="submit">Ver sus PlayLists</button>
+
+
+    }
+
 }
+<label>@Model.MensajeError</label>
